@@ -20,6 +20,10 @@ using Verse;
 /// The vanilla code correctly checks for duplicates when processing biome.wildPlants,
 /// but fails to do so when processing plant.wildBiomes, causing dictionary key collisions.
 /// 
+/// Technically, this would only affect modded games, as the stock biomes/lists are set up in such
+/// a way as to avoid duplicatesbut since the code in question is in the vanilla game, I figured
+/// I would address it directly.
+/// 
 /// Author: Kothliim
 /// License: Public Domain - Free to use, modify, and distribute
 /// </summary>
@@ -180,11 +184,10 @@ The fix is to check ContainsKey before calling Add() in the wildBiomes loops.
 
 REPRODUCTION:
 1. Create a map with multiple biomes (e.g., using Odyssey DLC biome transitions)
-2. Have any plant with wildBiomes entries for multiple biomes present on the map
+2. Have any plant with wildBiomes entries for multiple biomes present on the map (from mods)
 3. The game will throw "An item with the same key has already been added" exception
 
 This primarily affects:
-- Odyssey DLC biome transitions
-- Mods that add multiple biomes to maps (Geological Landforms, Biome Transitions)
-- Mods that add plants to multiple biomes via wildBiomes
+- Games with mods that add multiple biomes to maps (Geological Landforms, Biome Transitions)
+- Games with mods that add plants to multiple biomes via wildBiomes
 */
